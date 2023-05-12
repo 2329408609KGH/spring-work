@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qfedu.kgh.mapper.SpCartMapper">
+    <resultMap id="BaseResultMap" type="com.qfedu.kgh.entity.SpCart">
+        <id property="cartId" column="cart_id"/>
+        <result property="uid" column="uid"/>
+        <result property="status" column="status"/>
+    </resultMap>
+    <resultMap id="listResultMap" type="com.qfedu.kgh.common.vo.SpCartVO" extends="BaseResultMap">
+        <collection property="commodities" column="uid" select="com.qfedu.kgh.mapper.CommodityMapper.list"/>
+    </resultMap>
+    <select id="selectListByUid" resultMap="listResultMap">
+        SELECT c.cart_id, c.uid, c.status
+        FROM sp_cart c
+        WHERE uid=#{uid}
+    </select>
+
+    <insert id="insert">
+        INSERT INTO sp_cart(uid)VALUE (#{uid});
+    </insert>
+</mapper>
